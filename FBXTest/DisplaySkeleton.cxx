@@ -18,7 +18,7 @@
 void DisplaySkeleton(FbxNode* pNode, std::map<std::string, std::string> jointMap)
 {
     static std::set<std::string> foundNodes = {};
-    for (int i = 0;! foundNodes.insert(std::string(pNode->GetName())).second; i++) {
+    for (int i = 2;! foundNodes.insert(std::string(pNode->GetName())).second; i++) {
         FbxString stringName = pNode->GetName();
         DisplayString("Found duplicate of: " + stringName);
 

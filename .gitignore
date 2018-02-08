@@ -1,5 +1,6 @@
 .DS_Store
 *.xcworkspace
 xcuserdata
-ThirdParty/FbxSdk/*
+ThirdParty/FbxSdk/include
+ThirdParty/FbxSdk/lib
 DerivedData

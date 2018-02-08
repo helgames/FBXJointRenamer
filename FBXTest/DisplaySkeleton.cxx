@@ -13,9 +13,23 @@
 #include <map>
 #include "DisplayCommon.h"
 #include <string>
+#include <set>
 
 void DisplaySkeleton(FbxNode* pNode, std::map<std::string, std::string> jointMap)
 {
+    static std::set<std::string> foundNodes = {};
+    for (int i = 2;! foundNodes.insert(std::string(pNode->GetName())).second; i++) {
+        FbxString stringName = pNode->GetName();
+        DisplayString("Found duplicate of: " + stringName);
+
+        char buffer[4];
+        sprintf(buffer, "%2d", i);
+        stringName.Append(buffer, strlen(buffer));
+
+        DisplayString("Renaming to: " + stringName);
+        pNode->SetName(stringName);
+    }
+
     FbxSkeleton* lSkeleton = (FbxSkeleton*) pNode->GetNodeAttribute();
 
     DisplayString("Skeleton Name: ", (char *) pNode->GetName());

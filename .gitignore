@@ -2,3 +2,4 @@
 *.xcworkspace
 xcuserdata
 ThirdParty/FbxSdk/*
+DerivedData

@@ -1,0 +1,1 @@
+Please paste the include and lib directory of the FBX SDK here

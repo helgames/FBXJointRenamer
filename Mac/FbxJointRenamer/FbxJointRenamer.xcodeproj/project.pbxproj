@@ -16,6 +16,7 @@
 		F72435E1202C9F7C005042F7 /* Common.cxx in Sources */ = {isa = PBXBuildFile; fileRef = F72435D8202C9F7C005042F7 /* Common.cxx */; };
 		F72435E2202C9F7C005042F7 /* DisplayHierarchy.cxx in Sources */ = {isa = PBXBuildFile; fileRef = F72435D9202C9F7C005042F7 /* DisplayHierarchy.cxx */; };
 		F72435E8202C9FE5005042F7 /* libfbxsdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F72435E7202C9FE5005042F7 /* libfbxsdk.a */; };
+		F72435EB202CAE99005042F7 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F72435EA202CAE99005042F7 /* CoreFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -50,6 +51,7 @@
 		F72435DA202C9F7C005042F7 /* DisplayUserProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayUserProperties.h; path = ../../../FBXTest/DisplayUserProperties.h; sourceTree = "<group>"; };
 		F72435E7202C9FE5005042F7 /* libfbxsdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfbxsdk.a; path = ../../../../ThirdParty/FbxSdk/lib/clang/release/libfbxsdk.a; sourceTree = "<group>"; };
 		F72435E9202C9FED005042F7 /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; name = include; path = ../../../../ThirdParty/FbxSdk/include; sourceTree = "<group>"; };
+		F72435EA202CAE99005042F7 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F72435EB202CAE99005042F7 /* CoreFoundation.framework in Frameworks */,
 				F72435E8202C9FE5005042F7 /* libfbxsdk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -116,6 +119,7 @@
 		F72435E3202C9F91005042F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F72435EA202CAE99005042F7 /* CoreFoundation.framework */,
 				F72435E6202C9FD7005042F7 /* FbxSdk */,
 			);
 			path = Frameworks;

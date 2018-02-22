@@ -34,10 +34,12 @@ int main(int argc, char** argv)
 
 	// The example can take a FBX file as an argument.
 	FbxString lFilePath("");
+    const char* outpath = "output.fbx";
 	for (int i = 1, c = argc; i < c; ++i)
 	{
 		if (FbxString(argv[i]) == "-test") gVerbose = false;
 		else if (lFilePath.IsEmpty()) lFilePath = argv[i];
+        else if (!lFilePath.IsEmpty()) outpath = argv[i];
 	}
 
 	//Read joints file
@@ -89,7 +91,7 @@ int main(int argc, char** argv)
 		
 	}
 
-	lResult = SaveScene(lSdkManager, lScene, "output.fbx");
+	lResult = SaveScene(lSdkManager, lScene, outpath);
 	if (lResult == false)
 	{
 		FBXSDK_printf("\n\nAn error occurred while saving the scene...\n");

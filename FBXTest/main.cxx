@@ -16,6 +16,7 @@ void DisplayTarget(FbxNode* pNode);
 void DisplayTransformPropagation(FbxNode* pNode);
 void DisplayGeometricTransform(FbxNode* pNode);
 void DisplayMetaData(FbxScene* pScene);
+void ScaleCurves(FbxNode* pNode, FbxAnimLayer* pLayer, FbxVectorTemplate3<double> scale);
 
 static bool gVerbose = true;
 std::map<std::string, std::string> jointMap;
@@ -91,6 +92,28 @@ int main(int argc, char** argv)
 		
 	}
 
+    // Parse all the nodes to convert the translations and meshes vertices.
+    std::deque<FbxNode*> nodes;
+    int numAnimStacks = lScene->GetSrcObjectCount(FbxCriteria::ObjectType(FbxAnimStack::ClassId));
+    for(int i = 0; i < numAnimStacks; ++i)
+    {
+        FbxAnimStack* stack = FbxCast<FbxAnimStack>(lScene->GetSrcObject(FbxCriteria::ObjectType(FbxAnimStack::ClassId), i));
+        FBXSDK_printf("Scaling Stack %s\n", stack->GetName());
+
+        int nbAnimLayers = stack->GetMemberCount(FbxCriteria::ObjectType(FbxAnimLayer::ClassId));
+        for(int j = 0; j < nbAnimLayers; ++j)
+        {
+            FbxAnimLayer* layer = FbxCast<FbxAnimLayer>(stack->GetMember(FbxCriteria::ObjectType(FbxAnimLayer::ClassId), j));
+            FBXSDK_printf("  Scaling Layer %s\n", layer->GetName());
+            ScaleCurves(lScene->GetRootNode(), layer, FbxVectorTemplate3<double>(1.0, 1.0, 1.0));
+        }
+    }
+
+    FbxGlobalSettings& settings = lScene->GetGlobalSettings();
+    FbxSystemUnit::cm.ConvertScene(lScene);
+    settings.SetSystemUnit(FbxSystemUnit::cm);
+    lScene->GetAnimationEvaluator()->Reset();
+
 	lResult = SaveScene(lSdkManager, lScene, outpath);
 	if (lResult == false)
 	{
@@ -105,6 +128,41 @@ int main(int argc, char** argv)
 	DestroySdkObjects(lSdkManager, lResult);
 
 	return 0;
+}
+
+void ApplyComponentScale(FbxNode* pNode, FbxAnimLayer* pLayer, FbxVectorTemplate3<double>& scale, int component, const char* componentName)
+{
+    // Apply parent scale first
+    FbxAnimCurve* translation = pNode->LclTranslation.GetCurve(pLayer, componentName);
+    if(translation)
+    {
+        FBXSDK_printf("      Trans %s %s\n", componentName, pNode->GetName());
+        translation->KeyScaleValueAndTangent(scale[component]);
+    }
+
+    // Add local scale for child scaling
+    FbxAnimCurve* lclScale = pNode->LclScaling.GetCurve(pLayer, componentName);
+    if (lclScale)
+    {
+        FBXSDK_printf("      Scale %s %s\n", componentName, pNode->GetName());
+        scale[component] *= lclScale->GetValue();
+        lclScale->KeyClear();
+    }
+}
+
+void ScaleCurves(FbxNode* pNode, FbxAnimLayer* pLayer, FbxVectorTemplate3<double> scale)
+{
+    FBXSDK_printf("    Scaling %s\n", pNode->GetName());
+    ApplyComponentScale(pNode, pLayer, scale, 0, FBXSDK_CURVENODE_COMPONENT_X);
+    ApplyComponentScale(pNode, pLayer, scale, 1, FBXSDK_CURVENODE_COMPONENT_Y);
+    ApplyComponentScale(pNode, pLayer, scale, 2, FBXSDK_CURVENODE_COMPONENT_Z);
+
+    FBXSDK_printf("      New scale %f, %f, %f\n", scale[0], scale[1], scale[2]);
+
+    for (int i = 0; i < pNode->GetChildCount(); i++)
+    {
+        ScaleCurves(pNode->GetChild(i), pLayer, scale);
+    }
 }
 
 void DisplayContent(FbxScene* pScene)

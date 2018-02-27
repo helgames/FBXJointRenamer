@@ -19,6 +19,7 @@ void DisplayMetaData(FbxScene* pScene);
 void ScaleCurves(FbxNode* pNode, FbxAnimLayer* pLayer, FbxVectorTemplate3<double> scale);
 
 static bool gVerbose = true;
+static bool removeAnim = false;
 std::map<std::string, std::string> jointMap;
 
 
@@ -39,6 +40,7 @@ int main(int argc, char** argv)
 	for (int i = 1, c = argc; i < c; ++i)
 	{
 		if (FbxString(argv[i]) == "-test") gVerbose = false;
+        else if (FbxString(argv[i]) == "-removeanim") removeAnim = true;
 		else if (lFilePath.IsEmpty()) lFilePath = argv[i];
         else if (!lFilePath.IsEmpty()) outpath = argv[i];
 	}
@@ -105,6 +107,16 @@ int main(int argc, char** argv)
             FbxAnimLayer* layer = FbxCast<FbxAnimLayer>(stack->GetMember(FbxCriteria::ObjectType(FbxAnimLayer::ClassId), j));
             FBXSDK_printf("  Scaling Layer %s\n", layer->GetName());
             ScaleCurves(lScene->GetRootNode(), layer, FbxVectorTemplate3<double>(1.0, 1.0, 1.0));
+        }
+    }
+
+    if (removeAnim)
+    {
+        for (int i = numAnimStacks - 1; i >= 0; --i)
+        {
+            FbxAnimStack* stack = FbxCast<FbxAnimStack>(lScene->GetSrcObject(FbxCriteria::ObjectType(FbxAnimStack::ClassId), i));
+            FBXSDK_printf("Removing Anim Stack %s\n", stack->GetName());
+            lScene->RemoveAnimStack(stack->GetName());
         }
     }
 

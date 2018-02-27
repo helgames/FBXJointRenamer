@@ -93,7 +93,6 @@ int main(int argc, char** argv)
 	}
 
     // Parse all the nodes to convert the translations and meshes vertices.
-    std::deque<FbxNode*> nodes;
     int numAnimStacks = lScene->GetSrcObjectCount(FbxCriteria::ObjectType(FbxAnimStack::ClassId));
     for(int i = 0; i < numAnimStacks; ++i)
     {

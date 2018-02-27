@@ -20,6 +20,7 @@ void ScaleCurves(FbxNode* pNode, FbxAnimLayer* pLayer, FbxVectorTemplate3<double
 
 static bool gVerbose = true;
 static bool removeAnim = false;
+static float baseScale = 1.0f;
 std::map<std::string, std::string> jointMap;
 
 
@@ -41,6 +42,7 @@ int main(int argc, char** argv)
 	{
 		if (FbxString(argv[i]) == "-test") gVerbose = false;
         else if (FbxString(argv[i]) == "-removeanim") removeAnim = true;
+        else if (FbxString(argv[i]) == "-scale100") baseScale = 100.0f;
 		else if (lFilePath.IsEmpty()) lFilePath = argv[i];
         else if (!lFilePath.IsEmpty()) outpath = argv[i];
 	}
@@ -106,7 +108,7 @@ int main(int argc, char** argv)
         {
             FbxAnimLayer* layer = FbxCast<FbxAnimLayer>(stack->GetMember(FbxCriteria::ObjectType(FbxAnimLayer::ClassId), j));
             FBXSDK_printf("  Scaling Layer %s\n", layer->GetName());
-            ScaleCurves(lScene->GetRootNode(), layer, FbxVectorTemplate3<double>(1.0, 1.0, 1.0));
+            ScaleCurves(lScene->GetRootNode(), layer, FbxVectorTemplate3<double>(baseScale, baseScale, baseScale));
         }
     }
 
@@ -147,7 +149,6 @@ void ApplyComponentScale(FbxNode* pNode, FbxAnimLayer* pLayer, FbxVectorTemplate
     FbxAnimCurve* translation = pNode->LclTranslation.GetCurve(pLayer, componentName);
     if(translation)
     {
-        FBXSDK_printf("      Trans %s %s\n", componentName, pNode->GetName());
         translation->KeyScaleValueAndTangent(scale[component]);
     }
 
@@ -155,7 +156,6 @@ void ApplyComponentScale(FbxNode* pNode, FbxAnimLayer* pLayer, FbxVectorTemplate
     FbxAnimCurve* lclScale = pNode->LclScaling.GetCurve(pLayer, componentName);
     if (lclScale)
     {
-        FBXSDK_printf("      Scale %s %s\n", componentName, pNode->GetName());
         scale[component] *= lclScale->GetValue();
         lclScale->KeyClear();
     }
@@ -163,7 +163,6 @@ void ApplyComponentScale(FbxNode* pNode, FbxAnimLayer* pLayer, FbxVectorTemplate
 
 void ScaleCurves(FbxNode* pNode, FbxAnimLayer* pLayer, FbxVectorTemplate3<double> scale)
 {
-    FBXSDK_printf("    Scaling %s\n", pNode->GetName());
     ApplyComponentScale(pNode, pLayer, scale, 0, FBXSDK_CURVENODE_COMPONENT_X);
     ApplyComponentScale(pNode, pLayer, scale, 1, FBXSDK_CURVENODE_COMPONENT_Y);
     ApplyComponentScale(pNode, pLayer, scale, 2, FBXSDK_CURVENODE_COMPONENT_Z);
@@ -207,9 +206,12 @@ void DisplayContent(FbxNode* pNode)
 		{
 		default:
 			break;
-
+        case FbxNodeAttribute::eMesh:
+            FbxMesh* mesh = FbxCast<FbxMesh>(pNode);
+                // TODO: scale the mesh
+            break;
 		case FbxNodeAttribute::eSkeleton:
-			DisplaySkeleton(pNode, jointMap);
+			DisplaySkeleton(pNode, jointMap, baseScale);
 			break;
 
 		}

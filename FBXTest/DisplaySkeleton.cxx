@@ -15,7 +15,7 @@
 #include <string>
 #include <set>
 
-void DisplaySkeleton(FbxNode* pNode, std::map<std::string, std::string> jointMap)
+void DisplaySkeleton(FbxNode* pNode, std::map<std::string, std::string> jointMap, float baseScale)
 {
     static std::set<std::string> foundNodes = {};
     for (int i = 2;! foundNodes.insert(std::string(pNode->GetName())).second; i++) {
@@ -49,11 +49,11 @@ void DisplaySkeleton(FbxNode* pNode, std::map<std::string, std::string> jointMap
 
 
     static bool root = true;
-    static double scale = 1.0;
+    static double scale = baseScale;
     if (root)
     {
         root = false;
-        scale = pNode->LclScaling.Get()[0];
+        scale *= pNode->LclScaling.Get()[0];
         pNode->LclScaling.Set(FbxVectorTemplate3<double>(1.0, 1.0, 1.0));
         FBXSDK_printf("Scaling root from %f to %f\n", scale, pNode->LclScaling.Get()[0]);
     }

@@ -15,7 +15,7 @@
 #include "DisplayCommon.h"
 #include <map>
 
-void DisplaySkeleton(FbxNode* pNode, std::map<std::string, std::string> jointMap);
+void DisplaySkeleton(FbxNode* pNode, std::map<std::string, std::string> jointMap, float baseScale);
 
 #endif // #ifndef _DISPLAY_SKELETON_H
 

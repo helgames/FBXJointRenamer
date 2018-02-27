@@ -48,6 +48,15 @@ void DisplaySkeleton(FbxNode* pNode, std::map<std::string, std::string> jointMap
 	
 
 
+    static bool root = true;
+    static double scale = 1.0;
+    if (root)
+    {
+        root = false;
+        scale = pNode->LclScaling.Get()[0];
+        pNode->LclScaling.Set(FbxVectorTemplate3<double>(1.0, 1.0, 1.0));
+        FBXSDK_printf("Scaling root from %f to %f\n", scale, pNode->LclScaling.Get()[0]);
+    }
 
     const char* lSkeletonTypes[] = { "Root", "Limb", "Limb Node", "Effector" };
 
@@ -56,14 +65,20 @@ void DisplaySkeleton(FbxNode* pNode, std::map<std::string, std::string> jointMap
     if (lSkeleton->GetSkeletonType() == FbxSkeleton::eLimb)
     {
         DisplayDouble("    Limb Length: ", lSkeleton->LimbLength.Get());
+        lSkeleton->LimbLength.Set(lSkeleton->LimbLength.Get() * scale);
+        DisplayDouble("    New Length: ", lSkeleton->LimbLength.Get());
     }
     else if (lSkeleton->GetSkeletonType() == FbxSkeleton::eLimbNode)
     {
         DisplayDouble("    Limb Node Size: ", lSkeleton->Size.Get());
+        lSkeleton->Size.Set(lSkeleton->Size.Get() * scale);
+        DisplayDouble("    New Length: ", lSkeleton->Size.Get());
     }
     else if (lSkeleton->GetSkeletonType() == FbxSkeleton::eRoot)
     {
         DisplayDouble("    Limb Root Size: ", lSkeleton->Size.Get());
+        lSkeleton->Size.Set(lSkeleton->Size.Get() * scale);
+        DisplayDouble("    New Length: ", lSkeleton->Size.Get());
     }
 
     DisplayColor("    Color: ", lSkeleton->GetLimbNodeColor());

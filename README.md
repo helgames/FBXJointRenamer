@@ -1,6 +1,8 @@
 # FBXJointRenamer
 A command line tool to rename joints for retargeting in FBX files
 
+This is a quick and dirty Mac port with extensions to remove root scale and animations from the source file, so it works better with Unreal Engine 4.
+
 Operation is super simple:
 
 1. Place your input FBX in the Debug folder

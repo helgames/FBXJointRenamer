@@ -9,13 +9,7 @@
 /* Begin PBXBuildFile section */
 		F72435EB202CAE99005042F7 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F72435EA202CAE99005042F7 /* CoreFoundation.framework */; };
 		F77BC910202CD06A009E84A8 /* libfbxsdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F77BC90F202CD06A009E84A8 /* libfbxsdk.a */; };
-		F77BC947202CD31C009E84A8 /* AnimationUtility.cxx in Sources */ = {isa = PBXBuildFile; fileRef = F77BC92F202CD0AB009E84A8 /* AnimationUtility.cxx */; };
 		F77BC948202CD31C009E84A8 /* Common.cxx in Sources */ = {isa = PBXBuildFile; fileRef = F77BC931202CD0AB009E84A8 /* Common.cxx */; };
-		F77BC949202CD31C009E84A8 /* GeometryUtility.cxx in Sources */ = {isa = PBXBuildFile; fileRef = F77BC933202CD0AB009E84A8 /* GeometryUtility.cxx */; };
-		F77BC94A202CD31C009E84A8 /* DisplayCommon.cxx in Sources */ = {isa = PBXBuildFile; fileRef = F77BC938202CD25C009E84A8 /* DisplayCommon.cxx */; };
-		F77BC94B202CD31C009E84A8 /* DisplayHierarchy.cxx in Sources */ = {isa = PBXBuildFile; fileRef = F77BC93A202CD25C009E84A8 /* DisplayHierarchy.cxx */; };
-		F77BC94C202CD31C009E84A8 /* DisplaySkeleton.cxx in Sources */ = {isa = PBXBuildFile; fileRef = F77BC93C202CD25C009E84A8 /* DisplaySkeleton.cxx */; };
-		F77BC94D202CD31C009E84A8 /* DisplayUserProperties.cxx in Sources */ = {isa = PBXBuildFile; fileRef = F77BC93E202CD25D009E84A8 /* DisplayUserProperties.cxx */; };
 		F77BC94E202CD31C009E84A8 /* main.cxx in Sources */ = {isa = PBXBuildFile; fileRef = F77BC940202CD25D009E84A8 /* main.cxx */; };
 /* End PBXBuildFile section */
 
@@ -36,22 +30,9 @@
 		F72435EA202CAE99005042F7 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		F77BC90E202CD056009E84A8 /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; name = include; path = ../../ThirdParty/FbxSdk/include; sourceTree = SOURCE_ROOT; };
 		F77BC90F202CD06A009E84A8 /* libfbxsdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfbxsdk.a; path = ../../ThirdParty/FbxSdk/lib/clang/release/libfbxsdk.a; sourceTree = SOURCE_ROOT; };
-		F77BC92F202CD0AB009E84A8 /* AnimationUtility.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AnimationUtility.cxx; path = ../../FBXTest/Common/AnimationUtility.cxx; sourceTree = SOURCE_ROOT; };
-		F77BC930202CD0AB009E84A8 /* AnimationUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimationUtility.h; path = ../../FBXTest/Common/AnimationUtility.h; sourceTree = SOURCE_ROOT; };
 		F77BC931202CD0AB009E84A8 /* Common.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Common.cxx; path = ../../FBXTest/Common/Common.cxx; sourceTree = SOURCE_ROOT; };
 		F77BC932202CD0AB009E84A8 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Common.h; path = ../../FBXTest/Common/Common.h; sourceTree = SOURCE_ROOT; };
-		F77BC933202CD0AB009E84A8 /* GeometryUtility.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GeometryUtility.cxx; path = ../../FBXTest/Common/GeometryUtility.cxx; sourceTree = SOURCE_ROOT; };
-		F77BC934202CD0AB009E84A8 /* GeometryUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GeometryUtility.h; path = ../../FBXTest/Common/GeometryUtility.h; sourceTree = SOURCE_ROOT; };
-		F77BC938202CD25C009E84A8 /* DisplayCommon.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayCommon.cxx; path = ../../FBXTest/DisplayCommon.cxx; sourceTree = SOURCE_ROOT; };
-		F77BC939202CD25C009E84A8 /* DisplayCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayCommon.h; path = ../../FBXTest/DisplayCommon.h; sourceTree = SOURCE_ROOT; };
-		F77BC93A202CD25C009E84A8 /* DisplayHierarchy.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayHierarchy.cxx; path = ../../FBXTest/DisplayHierarchy.cxx; sourceTree = SOURCE_ROOT; };
-		F77BC93B202CD25C009E84A8 /* DisplayHierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayHierarchy.h; path = ../../FBXTest/DisplayHierarchy.h; sourceTree = SOURCE_ROOT; };
-		F77BC93C202CD25C009E84A8 /* DisplaySkeleton.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplaySkeleton.cxx; path = ../../FBXTest/DisplaySkeleton.cxx; sourceTree = SOURCE_ROOT; };
-		F77BC93D202CD25D009E84A8 /* DisplaySkeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplaySkeleton.h; path = ../../FBXTest/DisplaySkeleton.h; sourceTree = SOURCE_ROOT; };
-		F77BC93E202CD25D009E84A8 /* DisplayUserProperties.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayUserProperties.cxx; path = ../../FBXTest/DisplayUserProperties.cxx; sourceTree = SOURCE_ROOT; };
-		F77BC93F202CD25D009E84A8 /* DisplayUserProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayUserProperties.h; path = ../../FBXTest/DisplayUserProperties.h; sourceTree = SOURCE_ROOT; };
 		F77BC940202CD25D009E84A8 /* main.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cxx; path = ../../FBXTest/main.cxx; sourceTree = SOURCE_ROOT; };
-		F77BC941202CD25D009E84A8 /* Thumbnail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Thumbnail.h; path = ../../FBXTest/Thumbnail.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,16 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				F72435D2202C9F7C005042F7 /* Common */,
-				F77BC938202CD25C009E84A8 /* DisplayCommon.cxx */,
-				F77BC939202CD25C009E84A8 /* DisplayCommon.h */,
-				F77BC93A202CD25C009E84A8 /* DisplayHierarchy.cxx */,
-				F77BC93B202CD25C009E84A8 /* DisplayHierarchy.h */,
-				F77BC93C202CD25C009E84A8 /* DisplaySkeleton.cxx */,
-				F77BC93D202CD25D009E84A8 /* DisplaySkeleton.h */,
-				F77BC93E202CD25D009E84A8 /* DisplayUserProperties.cxx */,
-				F77BC93F202CD25D009E84A8 /* DisplayUserProperties.h */,
 				F77BC940202CD25D009E84A8 /* main.cxx */,
-				F77BC941202CD25D009E84A8 /* Thumbnail.h */,
 			);
 			path = Source;
 			sourceTree = SOURCE_ROOT;
@@ -105,12 +77,8 @@
 		F72435D2202C9F7C005042F7 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				F77BC92F202CD0AB009E84A8 /* AnimationUtility.cxx */,
-				F77BC930202CD0AB009E84A8 /* AnimationUtility.h */,
 				F77BC931202CD0AB009E84A8 /* Common.cxx */,
 				F77BC932202CD0AB009E84A8 /* Common.h */,
-				F77BC933202CD0AB009E84A8 /* GeometryUtility.cxx */,
-				F77BC934202CD0AB009E84A8 /* GeometryUtility.h */,
 			);
 			name = Common;
 			path = ../../FBXTest/Common;
@@ -192,13 +160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F77BC948202CD31C009E84A8 /* Common.cxx in Sources */,
-				F77BC94B202CD31C009E84A8 /* DisplayHierarchy.cxx in Sources */,
-				F77BC94A202CD31C009E84A8 /* DisplayCommon.cxx in Sources */,
-				F77BC94C202CD31C009E84A8 /* DisplaySkeleton.cxx in Sources */,
-				F77BC94D202CD31C009E84A8 /* DisplayUserProperties.cxx in Sources */,
-				F77BC947202CD31C009E84A8 /* AnimationUtility.cxx in Sources */,
 				F77BC94E202CD31C009E84A8 /* main.cxx in Sources */,
-				F77BC949202CD31C009E84A8 /* GeometryUtility.cxx in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

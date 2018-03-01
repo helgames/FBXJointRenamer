@@ -123,14 +123,50 @@ void ScaleTranslation(FbxNode* pNode, FbxDouble3 scale)
 void ScaleMesh(FbxMesh* mesh, FbxDouble3 scale)
 {
     FBXSDK_printf("    Scale Mesh: %f, %f, %f\n", scale[0], scale[1], scale[2]);
-    unsigned int const numVertices = mesh->GetControlPointsCount();
-    for(unsigned int i = 0; i < numVertices; ++i)
+    int vertexCount = mesh->GetControlPointsCount();
+    for(unsigned int i = 0; i < vertexCount; ++i)
     {
         FbxVector4 vertex = mesh->GetControlPointAt(i);
         vertex[0] *= scale[0];
         vertex[1] *= scale[1];
         vertex[2] *= scale[2];
         mesh->SetControlPointAt(vertex, i);
+    }
+
+    FbxAMatrix transformMatrix;
+    FbxAMatrix scaleMatrix = {};
+    scaleMatrix.SetTQS({}, {}, FbxVector4(scale[0], scale[1], scale[2], 0.0f));
+    int deformerCount = mesh->GetDeformerCount();
+    for (int i = 0; i < deformerCount; ++i)
+    {
+        FbxDeformer* deformer = mesh->GetDeformer(i);
+        switch (deformer->GetDeformerType())
+        {
+            case FbxDeformer::eSkin:
+            {
+                FbxSkin* skin = FbxCast<FbxSkin>(deformer);
+                int clusterCount = skin->GetClusterCount();
+                for (int i = 0; i < clusterCount; ++i)
+                {
+                    FbxCluster* cluster = skin->GetCluster(i);
+
+                    transformMatrix = cluster->GetTransformMatrix(transformMatrix);
+                    transformMatrix *= scale[0];
+                    cluster->SetTransformMatrix(transformMatrix);
+
+                    transformMatrix = cluster->GetTransformLinkMatrix(transformMatrix);
+                    transformMatrix *= scaleMatrix;
+                    cluster->SetTransformLinkMatrix(transformMatrix);
+                }
+
+                break;
+            }
+            case FbxDeformer::eBlendShape:
+            case FbxDeformer::eVertexCache:
+            case FbxDeformer::eUnknown:
+            default:
+                break;
+        }
     }
 }
 
@@ -155,17 +191,17 @@ void ProcessSubScene(FbxNode* node, FbxDouble3 scale, bool inSkeleton = false)
                 case FbxSkeleton::eRoot:
                     length = skeleton->Size.Get();
                     FBXSDK_printf("  %s (Skeleton)\n    Scale Size: %.3f -> %.3f)\n", node->GetName(), length, length * factor);
-                    skeleton->Size.Set(length * factor);
+                    //skeleton->Size.Set(length * factor);
                     break;
                 case FbxSkeleton::eLimb:
                     length = skeleton->LimbLength.Get();
                     FBXSDK_printf("  %s (Limb)\n    Scale Length: %.3f -> %.3f)\n", node->GetName(), length, length * factor);
-                    skeleton->LimbLength.Set(length * factor);
+                    //skeleton->LimbLength.Set(length * factor);
                     break;
                 case FbxSkeleton::eLimbNode:
                     length = skeleton->Size.Get();
                     FBXSDK_printf("  %s (Limb Node)\n    Scale Size: %.3f -> %.3f)\n", node->GetName(), length, length * factor);
-                    skeleton->Size.Set(length * factor);
+                    //skeleton->Size.Set(length * factor);
                     break;
                 case FbxSkeleton::eEffector:
                     FBXSDK_printf("  %s (Effector)\n", node->GetName());
@@ -180,7 +216,7 @@ void ProcessSubScene(FbxNode* node, FbxDouble3 scale, bool inSkeleton = false)
                 scale[1] *= nodeScale[1];
                 scale[2] *= nodeScale[2];
                 FBXSDK_printf(" -> %f, %f, %f\n", scale[0], scale[1], scale[2]);
-                node->LclScaling.Set(FbxVectorTemplate3<double>(1.0, 1.0, 1.0));
+                node->LclScaling.Set(FbxDouble3(1.0, 1.0, 1.0));
                 inSkeleton = true;
             }
 
@@ -190,6 +226,7 @@ void ProcessSubScene(FbxNode* node, FbxDouble3 scale, bool inSkeleton = false)
         }
         case FbxNodeAttribute::eMesh:
             FBXSDK_printf("  %s (Mesh)\n", node->GetName());
+
             //ScaleMesh(node->GetMesh(), scale);
             ScaleTranslation(node, scale);
             inSkeleton = false;

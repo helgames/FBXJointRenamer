@@ -205,7 +205,7 @@ void ProcessSubScene(FbxNode* node, FbxDouble3 scale, bool inSkeleton = false)
     int const childCount = node->GetChildCount();
     for(int i = 0; i < childCount; ++i)
     {
-        ProcessSubScene(node->GetChild(i), scale);
+        ProcessSubScene(node->GetChild(i), scale, inSkeleton);
     }
 }
 
